@@ -1,7 +1,7 @@
 
 <h1 align="center">
   <br>
-  <a href="https://github.com/mdwheele/owls"><img src="public/icon.png" alt="Markdownify" width="200"></a>
+  <a href="https://github.com/mdwheele/owls"><img src="public/icon.png" alt="Owls" width="200"></a>
   <br>
   Owls
   <br>
