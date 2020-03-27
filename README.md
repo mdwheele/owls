@@ -49,7 +49,7 @@ We're going to be setting up automatic updates and posting releases here. Stay t
 
 ## Emailware
 
-Markdownify is an [emailware](https://en.wiktionary.org/wiki/emailware). Meaning, if you liked using this app or it has helped you in any way, I'd like you send me an email at <mdwheele@gmail.com> about anything you'd want to say about this software. I'd really appreciate it!
+Owls is an [emailware](https://en.wiktionary.org/wiki/emailware). Meaning, if you liked using this app or it has helped you in any way, I'd like you send me an email at <mdwheele@gmail.com> about anything you'd want to say about this software. I'd really appreciate it!
 
 Of course, you can always leave :heart: on our [issue board](https://github.com/mdwheele/owls/issues/new).
 
