@@ -20,6 +20,14 @@
   <img src="public/demo.png">
 </p>
 
+## Disclaimer
+
+:fire: I'm actively developing this application, which means that if you don't trust me (you shouldn't), 
+you should make backups of your host file before using this application in the circumstance that 🦉 deletes
+everything.
+
+You've been warned, on with the show.
+
 ## Key Features
 
 * Use Projects for every hostname you're interested in tracking.
