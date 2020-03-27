@@ -16,6 +16,10 @@
   <a href="#license">License</a>
 </p>
 
+<p align="center">
+  <img src="public/demo.png">
+</p>
+
 ## Key Features
 
 * Use Projects for every hostname you're interested in tracking.
