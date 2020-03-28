@@ -1,6 +1,7 @@
 'use strict'
 
 import { app, protocol, BrowserWindow } from 'electron'
+import { autoUpdater } from 'electron-updater'
 import {
   createProtocol,
   installVueDevtools
@@ -36,6 +37,9 @@ function createWindow () {
     createProtocol('app')
     // Load the index.html when not in development
     win.loadURL('app://./index.html')
+    autoUpdater.logger = require('electron-log')
+    autoUpdater.logger.transports.file.level = 'debug'
+    autoUpdater.checkForUpdatesAndNotify()
   }
 
   win.on('closed', () => {

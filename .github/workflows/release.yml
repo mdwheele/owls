@@ -1,0 +1,15 @@
+name: Release
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  macOS:
+    runs-on: macOS-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install dependencies
+      run: npm install
+    - name: Build on macOS
+      run: GH_TOKEN=${{ secrets.GH_TOKEN }} npm run electron:build -- -p always
