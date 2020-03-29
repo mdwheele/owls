@@ -5,11 +5,14 @@ on:
     branches: [ master ]
 
 jobs:
-  macOS:
-    runs-on: macOS-latest
+  Build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ macos-latest, windows-latest, ubuntu-latest ]
     steps:
     - uses: actions/checkout@v2
     - name: Install dependencies
       run: npm install
-    - name: Build on macOS
+    - name: Build on ${{ matrix.os }}
       run: GH_TOKEN=${{ secrets.GH_TOKEN }} npm run electron:build -- -p always
