@@ -79,11 +79,11 @@
           <h3 class="text-lg leading-6 font-medium text-grey-900">
             Whooooops!
           </h3>
-          <div class="mt-2">
+          <div class="mt-2 overflow-hidden">
             <p class="text-sm leading-5 text-grey-500">
               It looks like you don't have permissions to edit your hosts file. Here's how you take care of that on {{ os.platform }}:
             </p>
-            <pre class="my-4 text-sm bg-gray-200 py-3 px-4 inline-block rounded-lg">sudo chmod +a "{{ os.username }} allow write" /etc/hosts</pre>
+            <div class="hide-scrollbars my-4 text-sm bg-gray-200 py-3 px-4 inline-block rounded-lg font-mono whitespace-no-wrap overflow-x-scroll box-content max-w-lg">{{ os.permissionsTip }}</div>
           </div>
         </div>
       </div>
@@ -122,6 +122,7 @@ export default {
       os: {
         platform: system.getPlatformHuman(),
         username: system.getCurrentUser(),
+        permissionsTip: system.getPermissionTip()
       },
       showPermissionsError: false,
       search: '',
@@ -213,3 +214,11 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+    background: transparent;
+}
+</style>

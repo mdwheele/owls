@@ -4,7 +4,7 @@ import hostile from 'hostile'
 
 export function checkPermissions() {
   try {
-    fs.accessSync(getHostsPath(), fs.constants.W_OK)
+    fs.writeFileSync(getHostsPath(), '')
     return true
   } catch (error) {
     return false
@@ -70,7 +70,7 @@ export function getPermissionTip() {
     case 'darwin':
       return `sudo chmod +a "${getCurrentUser()} allow write" ${getHostsPath()}`
     case 'win32':
-      return `icacls "${getHostsPath()}" /grant "${getCurrentUser()}:M"`
+      return `powershell Start-Process icacls -ArgumentList @('${getHostsPath()}', '/grant', '${getCurrentUser()}:M') -Verb runAs`
     case 'linux':
       return `sudo setfacl -m u:${getCurrentUser()}:rw ${getHostsPath()}`
   }
