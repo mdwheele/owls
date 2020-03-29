@@ -9,7 +9,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ macos-latest, windows-2016 ]
+        os: [ macos-latest, windows-latest ]
     steps:
     - uses: actions/checkout@v2
 
@@ -29,4 +29,6 @@ jobs:
       run: npm install
 
     - name: Build on ${{ matrix.os }}
-      run: GH_TOKEN=${{ secrets.GH_TOKEN }} npm run electron:build -- -p always
+      env:
+        GH_TOKEN: ${{ secrets.GH_TOKEN }}
+      run: npm run electron:build -- -p always
