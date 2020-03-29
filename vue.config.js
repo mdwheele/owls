@@ -12,13 +12,16 @@ module.exports = {
           target: [
             {
               target: 'snap',
-              arch: 'x64'
+              arch: 'x64',
             },
             {
               target: 'tar.gz',
               arch: 'x64'
             }
           ]
+        },
+        snap: {
+          publish: ['github']
         }
       },
       mainProcessWatch: []
