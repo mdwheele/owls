@@ -81,9 +81,9 @@
           </h3>
           <div class="mt-2">
             <p class="text-sm leading-5 text-grey-500">
-              It looks like you don't have permissions to edit <pre class="inline">/etc/hosts</pre>. You've gotta grant yourself <kbd>write</kbd> on that before using this application.
+              It looks like you don't have permissions to edit your hosts file. Here's how you take care of that on {{ os.platform }}:
             </p>
-            <pre class="my-4 text-sm bg-gray-200 py-3 px-4 inline-block rounded-lg">sudo chmod +a "{{ currentSystemUser }} allow write" /etc/hosts</pre>
+            <pre class="my-4 text-sm bg-gray-200 py-3 px-4 inline-block rounded-lg">sudo chmod +a "{{ os.username }} allow write" /etc/hosts</pre>
           </div>
         </div>
       </div>
@@ -99,11 +99,8 @@
 </template>
 
 <script>
-import fs from 'fs'
-import os from 'os'
-
 import Fuse from 'fuse.js'
-import hostile from 'hostile'
+import system from '../services/system.js'
 
 import Modal from '@/components/Modal.vue'
 import AddEnvironmentModal from '@/components/AddEnvironmentModal.vue'
@@ -111,20 +108,27 @@ import AddProjectModal from '@/components/AddProjectModal.vue'
 
 export default {
   name: 'Home',
+  
   components: { Modal, AddEnvironmentModal, AddProjectModal },
+
   mounted() {
     if (this.checkAccess()) {
       this.fetchProjects()
     }
   },
+
   data() {
     return {
+      os: {
+        platform: system.getPlatformHuman(),
+        username: system.getCurrentUser(),
+      },
       showPermissionsError: false,
-      currentSystemUser: os.userInfo().username,
       search: '',
       projects: []
     }
   },
+
   computed: {
     filteredProjects() {
       if (!this.search) {
@@ -138,6 +142,7 @@ export default {
       return this.fuse.search(this.search).map(hit => hit.item)
     }
   },
+
   watch: {
     projects: {
       handler: function (val) {
@@ -146,49 +151,23 @@ export default {
       deep: true
     }
   },
-  methods: {
 
+  methods: {
     checkAccess() {
-      try {
-        fs.accessSync('/etc/hosts', fs.constants.W_OK)
+      if (system.checkPermissions()) {
         this.showPermissionsError = false
         this.fetchProjects()
-        return true
-      } catch (error) {
+      } else {
         this.showPermissionsError = true
-        return false
       }
     },
 
     fetchProjects() {
       if (localStorage.getItem('projects') === null) {
-        this.projects = this.fetchFromDisk()
+        this.projects = system.getHostsEntries()
       } else {
         this.projects = JSON.parse(localStorage.getItem('projects'))
       }
-    },
-
-    fetchFromDisk() {
-      return hostile.get(false)
-        .filter(host => {
-          const ignoredHost = ['::1', '255.255.255.255'].includes(host[0])
-          const localhost = host[1].includes('localhost')
-
-          return !ignoredHost && !localhost
-        })
-        .reduce((accum, host) => {
-          accum.push({
-            hostname: host[1],
-            environments: [
-              {
-                name: null,
-                ip: host[0],
-                active: true
-              }
-            ]
-          })
-          return accum
-        }, [])
     },
 
     projectActive(project) {
@@ -229,22 +208,7 @@ export default {
 
     flush(projects) {
       this.$nextTick(() => localStorage.setItem('projects', JSON.stringify(projects)))
-
-      const projectsOnDisk = this.fetchFromDisk()
-
-      projectsOnDisk.forEach(project => {
-        project.environments.forEach(env => {
-          hostile.remove(env.ip, project.hostname)
-        })
-      })
-
-      projects.forEach(project => {
-        project.environments.forEach(env => {
-          if (env.active) {
-            hostile.set(env.ip, project.hostname)
-          }
-        })
-      })
+      system.saveHostEntries(projects)
     }
   }
 }
