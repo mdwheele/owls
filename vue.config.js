@@ -6,9 +6,11 @@ module.exports = {
         productName: 'Owls',
         publish: ['github'],
         mac: {
-          target: 'dmg'
+          target: 'dmg',
+          artifactName: '${productName}-${os}.${ext}'
         },
         linux: {
+          artifactName: '${productName}-${os}.${ext}',
           target: [
             {
               target: 'snap',
@@ -19,6 +21,9 @@ module.exports = {
               arch: 'x64'
             }
           ]
+        },
+        win: {
+          artifactName: '${productName}-${os}.${ext}'
         },
         snap: {
           publish: ['github']
