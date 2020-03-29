@@ -4,7 +4,7 @@ import hostile from 'hostile'
 
 export function checkPermissions() {
   try {
-    fs.writeFileSync(getHostsPath(), '')
+    fs.appendFileSync(getHostsPath(), '')
     return true
   } catch (error) {
     return false
