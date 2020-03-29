@@ -37,9 +37,14 @@ function createWindow () {
     createProtocol('app')
     // Load the index.html when not in development
     win.loadURL('app://./index.html')
-    autoUpdater.logger = require('electron-log')
-    autoUpdater.logger.transports.file.level = 'debug'
-    autoUpdater.checkForUpdatesAndNotify()
+
+    if (process.platform !== 'linux') {
+      if (process.env.DEBUG) {
+        autoUpdater.logger = require('electron-log')
+        autoUpdater.logger.transports.file.level = 'debug'
+      }
+      autoUpdater.checkForUpdatesAndNotify()
+    }
   }
 
   win.on('closed', () => {
