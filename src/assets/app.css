@@ -3,3 +3,11 @@
 @tailwind components;
 
 @tailwind utilities;
+
+.app-region-drag {
+    -webkit-app-region: drag
+}
+
+.app-region-nodrag {
+    -webkit-app-region: no-drag
+}

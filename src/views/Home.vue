@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col h-screen bg-gray-100">
-    <div class="bg-white border-b border-gray-200" style="-webkit-app-region: drag">
+    <div class="bg-white border-b border-gray-200 app-region-drag">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex h-16 items-center">
           <!-- Logo -->
@@ -19,12 +19,12 @@
                     <path fill-rule="evenodd" clip-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" />
                   </svg>
                 </div>
-                <input id="search_field" v-model="search" class="block w-full h-full pl-8 pr-3 py-2 rounded-md text-gray-900 placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 sm:text-sm" placeholder="Search" />
+                <input id="search_field" v-model="search" class="app-region-nodrag block w-full h-full pl-8 pr-3 py-2 rounded-md text-gray-900 placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 sm:text-sm" placeholder="Search" />
               </div>
             </div>
           </div>
 
-          <AddProjectModal @saved="addProject" />
+          <AddProjectModal @saved="addProject" class="app-region-nodrag"/>
         </div>
       </div>
     </div>
