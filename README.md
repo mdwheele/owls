@@ -39,7 +39,11 @@ You've been warned. On with the show.
 
 ## How To Use
 
-To clone and run this application, you'll need [Git](https://git-scm.com) and [Node.js](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)) installed on your computer. From your command line:
+These instructions are most useful for those that want to run unreleased builds or to do development on Owls. If you would prefer to use a known working build, check out our [Download](#downloads) section.
+
+To clone and run this application, you'll need [Git](https://git-scm.com) and [Node.js](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)) installed on your computer.
+
+From your command line:
 
 ```bash
 # Clone this repository
@@ -57,7 +61,11 @@ $ npm run electron:serve
 
 ## Download
 
-We're going to be setting up automatic updates and posting releases here. Stay tuned.
+We're currently providing `prerelease` builds that are notable releases of work-in-progress. Please keep in mind that these are not bulletproof builds and that there **will** be bugs. Please report any bugs you discover so we can work to get them resolved!
+
+<p align="center">
+  <a href="https://github.com/mdwheele/owls/releases">Releases</a>
+</p>
 
 ## Emailware
 
