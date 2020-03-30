@@ -1,5 +1,10 @@
 @tailwind base;
 
+html, body {
+    width: 760px;
+    height: 560px;
+}
+
 @tailwind components;
 
 @tailwind utilities;

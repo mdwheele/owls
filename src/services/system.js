@@ -54,6 +54,10 @@ export function saveHostEntries(projects) {
   })
 }
 
+export function getPlatform() {
+  return process.platform
+}
+
 export function getPlatformHuman() {
   switch(process.platform) {
     case 'darwin':
@@ -85,6 +89,7 @@ export default {
   getHostsPath,
   getHostsEntries,
   saveHostEntries,
+  getPlatform,
   getPlatformHuman,
   getPermissionTip,
   getCurrentUser
