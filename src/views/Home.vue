@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col h-screen bg-gray-100">
-    <div class="bg-white border-b border-gray-200" style="-webkit-app-region: drag">
+    <div class="bg-white border-b border-gray-200 app-region-drag">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex h-16 items-center">
           <!-- Logo -->
@@ -19,18 +19,18 @@
                     <path fill-rule="evenodd" clip-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" />
                   </svg>
                 </div>
-                <input id="search_field" v-model="search" class="block w-full h-full pl-8 pr-3 py-2 rounded-md text-gray-900 placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 sm:text-sm" placeholder="Search" />
+                <input id="search_field" v-model="search" class="app-region-nodrag block w-full h-full pl-8 pr-3 py-2 rounded-md text-gray-900 placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 sm:text-sm" placeholder="Search" />
               </div>
             </div>
           </div>
 
-          <AddProjectModal @saved="addProject" />
+          <AddProjectModal @saved="addProject" class="app-region-nodrag"/>
         </div>
       </div>
     </div>
 
-    <div class="flex min-h-0 overflow-scroll">
-      <div class="max-w-7xl w-full py-6 sm:px-6 lg:px-8">
+    <div class="flex h-full min-h-0 overflow-scroll">
+      <div v-if="projects.length !== 0" class="max-w-7xl w-full py-6 sm:px-6 lg:px-8">
         <!-- Domain -->
         <div class="bg-white overflow-hidden shadow rounded-lg mb-6" v-for="project in filteredProjects" :key="project.hostname">
           <div class="border-b border-gray-200 px-4 py-5 sm:px-6">
@@ -69,6 +69,20 @@
             </div>
           </div>
         </div>
+      </div>
+      <!-- Empty State -->
+      <div v-else class="flex flex-col items-center justify-center h-full bg-white">
+        <h3 class="text-3xl mb-3 font-semibold">Draw the owl.</h3>  
+        <p>It's time to create an ow- err... project. Make a new project. Yep.</p>      
+        <img class="mx-auto block w-1/3 mt-3 mb-5" src="empty-state-large.jpg" />
+        <AddProjectModal @saved="addProject">
+          <template v-slot="{ on }">
+            <button v-on="on" type="button" class="relative inline-flex items-center py-2 pl-2 pr-3 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:shadow-outline-indigo focus:border-indigo-700 active:bg-indigo-700">
+              <svg fill="currentColor" viewBox="0 0 20 20" class="w-4 h-4 mr-2"><path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd"></path></svg>
+              Create Project
+            </button>
+          </template>
+        </AddProjectModal>
       </div>
     </div>
 
@@ -125,6 +139,7 @@ export default {
         permissionsTip: system.getPermissionTip()
       },
       showPermissionsError: false,
+      showAddProjectModal: false,
       search: '',
       projects: []
     }
@@ -178,7 +193,13 @@ export default {
     addProject(project) {
       this.projects.push({
         hostname: project.hostname,
-        environments: []
+        environments: [
+          {
+            name: 'Local',
+            ip: '127.0.0.1',
+            active: false
+          }
+        ]
       })
     },
 
