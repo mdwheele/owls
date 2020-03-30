@@ -1,6 +1,6 @@
 {
   "name": "owls",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "private": true,
   "scripts": {
     "electron:build": "vue-cli-service electron:build",
