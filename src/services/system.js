@@ -7,6 +7,7 @@ export function checkPermissions() {
     fs.appendFileSync(getHostsPath(), '')
     return true
   } catch (error) {
+    console.error(error)
     return false
   }
 }
@@ -68,7 +69,7 @@ export function getPlatformHuman() {
 export function getPermissionTip() {
   switch(process.platform) {
     case 'darwin':
-      return `sudo chmod +a "${getCurrentUser()} allow write" ${getHostsPath()}`
+      return `sudo chmod +a "${getCurrentUser()} allow read,write,append" ${getHostsPath()}`
     case 'win32':
       return `powershell Start-Process icacls -ArgumentList @('${getHostsPath()}', '/grant', '${getCurrentUser()}:M') -Verb runAs`
     case 'linux':
