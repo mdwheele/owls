@@ -10,7 +10,7 @@
           </div>
 
           <!-- Omnisearch -->
-          <div class="flex-1 flex">
+          <div class="flex-1 flex-auto">
             <div class="w-full flex md:ml-0">
               <label for="search_field" class="sr-only">Search</label>
               <div class="relative w-full text-gray-400 focus-within:text-gray-600">
@@ -24,11 +24,17 @@
             </div>
           </div>
 
-          <AddProjectModal @saved="addProject" class="app-region-nodrag"/>
+          <div class="flex-1">
+            <AddProjectModal @saved="addProject" class="app-region-nodrag"/>
+          </div>
+
+          <!-- Window controls -->
+          <div class="flex">
+            <WindowControls @minimized="minimizeWindow" @closed="closeWindow" class="app-region-nodrag"/>
+          </div>
         </div>
       </div>
     </div>
-
     <div class="flex h-full min-h-0 overflow-scroll">
       <div v-if="projects.length !== 0" class="max-w-7xl w-full py-6 sm:px-6 lg:px-8">
         <!-- Domain -->
@@ -113,6 +119,9 @@
 </template>
 
 <script>
+import WindowControls from '@/components/WindowControls.vue'
+import { remote } from 'electron'
+
 import Fuse from 'fuse.js'
 import system from '../services/system.js'
 
@@ -123,7 +132,7 @@ import AddProjectModal from '@/components/AddProjectModal.vue'
 export default {
   name: 'Home',
   
-  components: { Modal, AddEnvironmentModal, AddProjectModal },
+  components: { Modal, AddEnvironmentModal, AddProjectModal, WindowControls },
 
   mounted() {
     if (this.checkAccess()) {
@@ -169,6 +178,14 @@ export default {
   },
 
   methods: {
+    minimizeWindow() {
+      remote.BrowserWindow.getFocusedWindow().minimize()
+    },
+
+    closeWindow() {
+      remote.BrowserWindow.getFocusedWindow().close()
+    },
+
     checkAccess() {
       if (system.checkPermissions()) {
         this.showPermissionsError = false
