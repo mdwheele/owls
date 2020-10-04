@@ -25,10 +25,13 @@
           </div>
 
           <AddProjectModal @saved="addProject" class="app-region-nodrag"/>
+          <!-- Doesn't work (can't interact) -->
+          <!-- <WindowControls @minimized="minimizeWindow" @closed="closeWindow"/> -->
         </div>
       </div>
     </div>
-
+<!-- Works! -->
+<WindowControls @minimized="minimizeWindow" @closed="closeWindow"/> 
     <div class="flex h-full min-h-0 overflow-scroll">
       <div v-if="projects.length !== 0" class="max-w-7xl w-full py-6 sm:px-6 lg:px-8">
         <!-- Domain -->
@@ -120,10 +123,12 @@ import Modal from '@/components/Modal.vue'
 import AddEnvironmentModal from '@/components/AddEnvironmentModal.vue'
 import AddProjectModal from '@/components/AddProjectModal.vue'
 
+import WindowControls from '@/components/WindowControls.vue'
+
 export default {
   name: 'Home',
   
-  components: { Modal, AddEnvironmentModal, AddProjectModal },
+  components: { Modal, AddEnvironmentModal, AddProjectModal, WindowControls },
 
   mounted() {
     if (this.checkAccess()) {
@@ -231,6 +236,16 @@ export default {
     flush(projects) {
       this.$nextTick(() => localStorage.setItem('projects', JSON.stringify(projects)))
       system.saveHostEntries(projects)
+    },
+
+    minimizeWindow() {
+      const { remote } = require('electron')
+      remote.BrowserWindow.getFocusedWindow().minimize()
+    },
+
+    closeWindow() {
+      const { remote } = require('electron')
+      remote.BrowserWindow.getFocusedWindow().close()
     }
   }
 }
