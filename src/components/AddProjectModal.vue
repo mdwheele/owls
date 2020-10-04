@@ -16,6 +16,9 @@
           </label>
           <input v-model="form.hostname" class="transition duration-150 appearance-none border text-sm rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="hostname" type="text">
         </div>
+        <div class="flex">
+          <h3 class="text-red-700 text-sm mb-1">{{ errorMessage }}</h3>
+        </div>
         <div class="flex items-center justify-end">
           <button type="submit" class="relative inline-flex items-center py-2 pl-2 pr-3 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:shadow-outline-indigo focus:border-indigo-700 active:bg-indigo-700">
             Save
@@ -37,15 +40,23 @@ export default {
       open: false,
       form: {
         hostname: '',
-      }
+      },
+      errorMessage: ''
     }
   },
 
   methods: {
     handleSubmit(modal) {
-      modal.close()
-      this.$emit('saved', this.form)
-      this.form.hostname = ''
+      // Regex from https://regexr.com/3g5j0
+      if (this.form.hostname.match(/^(?!:\/\/)(?=.{1,255}$)((.{1,63}\.){1,127}(?![0-9]*$)[a-z0-9-]+\.?)$/)) {
+        modal.close()
+        this.$emit('saved', this.form)
+        this.form.hostname = ''
+      }
+      else {
+        this.errorMessage = 'Please enter a valid hostname.'
+        return
+      }
     }
   }
 }
