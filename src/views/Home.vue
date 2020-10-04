@@ -24,12 +24,12 @@
             </div>
           </div>
 
-          <!-- Window controls -->
           <div class="flex-1">
             <AddProjectModal @saved="addProject" class="app-region-nodrag"/>
           </div>
 
-          <div class="flex-2">
+          <!-- Window controls -->
+          <div class="flex">
             <WindowControls @minimized="minimizeWindow" @closed="closeWindow" class="app-region-nodrag"/>
           </div>
         </div>
