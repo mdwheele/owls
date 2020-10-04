@@ -25,8 +25,6 @@
           </div>
 
           <AddProjectModal @saved="addProject" class="app-region-nodrag"/>
-
-          <WindowControlsModal @minimized="minimizeWindow" @maximized="maximizeWindow" @closed="closeWindow"/>
         </div>
       </div>
     </div>
@@ -121,12 +119,11 @@ import system from '../services/system.js'
 import Modal from '@/components/Modal.vue'
 import AddEnvironmentModal from '@/components/AddEnvironmentModal.vue'
 import AddProjectModal from '@/components/AddProjectModal.vue'
-import WindowControlsModal from '@/components/WindowControlsModal.vue'
 
 export default {
   name: 'Home',
   
-  components: { Modal, AddEnvironmentModal, AddProjectModal, WindowControlsModal},
+  components: { Modal, AddEnvironmentModal, AddProjectModal },
 
   mounted() {
     if (this.checkAccess()) {
@@ -234,18 +231,6 @@ export default {
     flush(projects) {
       this.$nextTick(() => localStorage.setItem('projects', JSON.stringify(projects)))
       system.saveHostEntries(projects)
-    },
-
-    minimizeWindow() {
-      console.log('MIN CLICKED')
-    },
-
-    maximizeWindow() {
-      console.log('MAX CLICKED')
-    },
-
-    closeWindow() {
-      console.log('CLS CLICKED')
     }
   }
 }
