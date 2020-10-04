@@ -24,14 +24,17 @@
             </div>
           </div>
 
-          <AddProjectModal @saved="addProject" class="app-region-nodrag"/>
-          <!-- Doesn't work (can't interact) -->
-          <!-- <WindowControls @minimized="minimizeWindow" @closed="closeWindow"/> -->
+          <!-- Window controls -->
+          <div class="flex-1">
+            <AddProjectModal @saved="addProject" class="app-region-nodrag"/>
+          </div>
+
+          <div class="flex-2">
+            <WindowControls @minimized="minimizeWindow" @closed="closeWindow" class="app-region-nodrag"/>
+          </div>
         </div>
       </div>
     </div>
-<!-- Works! -->
-<WindowControls @minimized="minimizeWindow" @closed="closeWindow"/> 
     <div class="flex h-full min-h-0 overflow-scroll">
       <div v-if="projects.length !== 0" class="max-w-7xl w-full py-6 sm:px-6 lg:px-8">
         <!-- Domain -->
