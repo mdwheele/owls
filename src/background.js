@@ -22,7 +22,7 @@ function createWindow () {
   win = new BrowserWindow({ 
     width: 800, 
     height: 600, 
-    frame: true,
+    frame: false,
     resizable: false,
     webPreferences: {
       nodeIntegration: true
@@ -50,8 +50,6 @@ function createWindow () {
   win.on('closed', () => {
     win = null
   })
-
-  win.setMenuBarVisibility(false)
 }
 
 // Quit when all windows are closed.
