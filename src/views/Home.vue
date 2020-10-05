@@ -119,14 +119,15 @@
 </template>
 
 <script>
+import WindowControls from '@/components/WindowControls.vue'
+import { remote } from 'electron'
+
 import Fuse from 'fuse.js'
 import system from '../services/system.js'
 
 import Modal from '@/components/Modal.vue'
 import AddEnvironmentModal from '@/components/AddEnvironmentModal.vue'
 import AddProjectModal from '@/components/AddProjectModal.vue'
-
-import WindowControls from '@/components/WindowControls.vue'
 
 export default {
   name: 'Home',
@@ -177,6 +178,14 @@ export default {
   },
 
   methods: {
+    minimizeWindow() {
+      remote.BrowserWindow.getFocusedWindow().minimize()
+    },
+
+    closeWindow() {
+      remote.BrowserWindow.getFocusedWindow().close()
+    },
+
     checkAccess() {
       if (system.checkPermissions()) {
         this.showPermissionsError = false
@@ -239,16 +248,6 @@ export default {
     flush(projects) {
       this.$nextTick(() => localStorage.setItem('projects', JSON.stringify(projects)))
       system.saveHostEntries(projects)
-    },
-
-    minimizeWindow() {
-      const { remote } = require('electron')
-      remote.BrowserWindow.getFocusedWindow().minimize()
-    },
-
-    closeWindow() {
-      const { remote } = require('electron')
-      remote.BrowserWindow.getFocusedWindow().close()
     }
   }
 }
