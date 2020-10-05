@@ -30,7 +30,6 @@
     "autoprefixer": "^9.8.6",
     "electron": "^8.5.2",
     "electron-builder": "^22.8.1",
-    "electron-icon-builder": "^1.0.2",
     "electron-log": "^4.2.4",
     "tailwindcss": "^1.8.10",
     "vue-cli-plugin-electron-builder": "^1.4.6",
