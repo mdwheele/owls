@@ -1,0 +1,24 @@
+#
+# localhost is used to configure the loopback interface
+# when the system is booting.  Do not change this entry.
+##
+127.0.0.1 localhost rx.localhost
+255.255.255.255 broadcasthost
+::1 localhost
+
+
+# DEVELOPMENT HELPER
+#10.50.8.42 helper.nutanix.com
+
+# STAGING HELPER
+#10.50.8.43 helper.nutanix.com
+
+
+127.0.0.1 rx.localhost
+# Added by Docker Desktop
+# To allow the same kube context to work on the host and the container:
+# End of section
+127.0.0.1 kubernetes.docker.internal
+127.0.0.1 demo-beta.nutanix.com
+127.0.0.1 helper.nutanix.com
+127.0.0.1 rx.corp.nutanix.com
