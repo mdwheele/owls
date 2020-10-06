@@ -10,7 +10,7 @@
           </div>
 
           <!-- Omnisearch -->
-          <div class="flex-1 flex">
+          <div class="flex-1 mr-8">
             <div class="w-full flex md:ml-0">
               <label for="search_field" class="sr-only">Search</label>
               <div class="relative w-full text-gray-400 focus-within:text-gray-600">
@@ -24,11 +24,20 @@
             </div>
           </div>
 
-          <AddProjectModal @saved="addProject" class="app-region-nodrag"/>
+          <div class="flex space-x-4">
+            <AddProjectModal @saved="addProject" class="app-region-nodrag">
+              <template v-slot="{ on }">
+                <button v-on="on" type="button" class="relative inline-flex items-center py-1 px-2 border border-transparent text-xs leading-5 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:shadow-outline-indigo focus:border-indigo-700 active:bg-indigo-700">
+                  Create Project
+                  <svg fill="currentColor" viewBox="0 0 20 20" class="w-4 h-4 ml-1"><path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd"></path></svg>
+                </button>
+              </template>
+            </AddProjectModal>
+            <WindowControls @minimized="minimizeWindow" @closed="closeWindow" class="app-region-nodrag"/>
+          </div>
         </div>
       </div>
     </div>
-
     <div class="flex h-full min-h-0 overflow-scroll">
       <div v-if="projects.length !== 0" class="max-w-7xl w-full py-6 sm:px-6 lg:px-8">
         <!-- Domain -->
@@ -113,6 +122,9 @@
 </template>
 
 <script>
+import WindowControls from '@/components/WindowControls.vue'
+import { remote } from 'electron'
+
 import Fuse from 'fuse.js'
 import system from '../services/system.js'
 
@@ -123,7 +135,7 @@ import AddProjectModal from '@/components/AddProjectModal.vue'
 export default {
   name: 'Home',
   
-  components: { Modal, AddEnvironmentModal, AddProjectModal },
+  components: { Modal, AddEnvironmentModal, AddProjectModal, WindowControls },
 
   mounted() {
     if (this.checkAccess()) {
@@ -169,6 +181,14 @@ export default {
   },
 
   methods: {
+    minimizeWindow() {
+      remote.BrowserWindow.getFocusedWindow().minimize()
+    },
+
+    closeWindow() {
+      remote.BrowserWindow.getFocusedWindow().close()
+    },
+
     checkAccess() {
       if (system.checkPermissions()) {
         this.showPermissionsError = false
