@@ -9,6 +9,10 @@ html, body {
     height: 560px;
 }
 
+#window {
+    height: 85vh;
+}
+
 ::-webkit-scrollbar {
     display: none;
 }
