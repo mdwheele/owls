@@ -25,7 +25,7 @@ function createWindow () {
     frame: false,
     resizable: false,
     transparent: true,
-    hasShadow: true,
+    hasShadow: false,
     webPreferences: {
       nodeIntegration: true
     } 
