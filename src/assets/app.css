@@ -4,6 +4,19 @@
 
 @tailwind utilities;
 
+html, body {
+    width: 760px;
+    height: 560px;
+}
+
+#window {
+    height: 85vh;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
 .app-region-drag {
     -webkit-app-region: drag
 }
