@@ -54,9 +54,8 @@ export default {
         return
       }
       
-      modal.close()
       this.$emit('saved', this.form)
-      this.reset()
+      modal.close()
     },
 
     reset() {
